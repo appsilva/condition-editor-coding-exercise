@@ -1,0 +1,70 @@
+<main class="page">
+  <h1>Product Filtering Condition Editor </h1>
+
+  <section class="filter-panel">
+    <div class="filter-row">
+      <label for="property-select">Property: </label>
+      <select
+        class="dropdown"
+        id="property-select"
+        {{on "change" this.updateProperty}}
+        value={{this.selectedPropertyId}}
+      >
+        <option value="">Select a property</option>
+        {{#each this.propertyOptions as |property|}}
+          <option value={{property.id}}>{{property.label}}</option>
+        {{/each}}
+      </select>
+    </div>
+
+    <div class="filter-row">
+      <label for="operator-select">Operator: </label>
+      <select
+        class="dropdown"
+        id="operator-select"
+        {{on "change" this.updateOperator}}
+        value={{this.selectedOperatorId}}
+        disabled={{this.isOperatorSelectDisabled}}
+      >
+        <option value="">Select an operator</option>
+        {{#each this.operatorOptions as |operator|}}
+          <option value={{operator.id}}>{{operator.text}}</option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{#if this.shouldShowValueInput}}
+      <div class="filter-row">
+        <label for="value-input">Value: </label>
+        {{#if this.isEnumProperty}}
+          <select
+            class="dropdown"
+            id="value-input"
+            {{on "change" this.updateFilterValue}}
+            value={{this.filterValue}}
+            multiple
+          >
+            <option value="">Select a value</option>
+            {{#each this.selectedProperty.values as |propertyValue|}}
+              <option value={{propertyValue}}>{{propertyValue}}</option>
+            {{/each}}
+          </select>
+        {{else}}
+          <input
+            class="input"
+            id="value-input"
+            type={{this.valueInputType}}
+            value={{this.filterValue}}
+            {{on "input" this.updateFilterValue}}
+          />
+        {{/if}}
+      </div>
+    {{/if}}
+
+    <button
+      class="clear-button"
+      type="button"
+      {{on "click" this.clearFilter}}
+    >Clear filter</button>
+  </section>
+</main>

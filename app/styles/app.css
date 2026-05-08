@@ -1,1 +1,27 @@
-/* Ember supports plain CSS out of the box. More info: https://cli.emberjs.com/release/advanced-use/stylesheets/ */
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 4rem;
+}
+
+.filter-panel {
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.filter-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dropdown,
+.input,
+.clear-button {
+  padding: 0.25rem;
+}

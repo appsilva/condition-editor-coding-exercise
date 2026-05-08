@@ -51,4 +51,42 @@ export default class ApplicationController extends Controller {
       ) ?? null
     );
   }
+
+  get isOperatorSelectDisabled() {
+    return !this.selectedProperty;
+  }
+
+  get shouldShowValueInput() {
+    return this.selectedOperator
+      ? !OPERATORS_WITHOUT_VALUE.includes(this.selectedOperator.id)
+      : false;
+  }
+
+  get isEnumProperty() {
+    return this.selectedProperty?.type === 'enumerated';
+  }
+
+  get valueInputType() {
+    return this.selectedProperty?.type === 'number' ? 'number' : 'text';
+  }
+  @action updateProperty(event) {
+    this.selectedPropertyId = event.target.value;
+    this.selectedOperatorId = '';
+    this.filterValue = '';
+  }
+
+  @action updateOperator(event) {
+    this.selectedOperatorId = event.target.value;
+    this.filterValue = '';
+  }
+
+  @action updateFilterValue(event) {
+    this.filterValue = event.target.value;
+  }
+
+  @action clearFilter() {
+    this.selectedPropertyId = '';
+    this.selectedOperatorId = '';
+    this.filterValue = '';
+  }
 }
