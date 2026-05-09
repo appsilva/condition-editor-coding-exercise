@@ -69,19 +69,41 @@ export default class ApplicationController extends Controller {
   get valueInputType() {
     return this.selectedProperty?.type === 'number' ? 'number' : 'text';
   }
+
+  get filteredProducts() {
+    return applyFilter(this.products, {
+      property: this.selectedProperty,
+      operator: this.selectedOperator,
+      value: this.filterValue,
+    });
+  }
+
+  valueForProduct(product, propertyId) {
+    const pair = product.property_values.find(
+      (propertyValue) => propertyValue.property_id === propertyId,
+    );
+    return pair?.value ?? '-';
+  }
+
   @action updateProperty(event) {
     this.selectedPropertyId = event.target.value;
     this.selectedOperatorId = '';
-    this.filterValue = '';
+    this.filterValue = this.selectedProperty?.type === 'enumerated' ? [] : '';
   }
 
   @action updateOperator(event) {
     this.selectedOperatorId = event.target.value;
-    this.filterValue = '';
+    this.filterValue = this.selectedProperty?.type === 'enumerated' ? [] : '';
   }
 
   @action updateFilterValue(event) {
-    this.filterValue = event.target.value;
+    if (event.target.multiple) {
+      this.filterValue = Array.from(event.target.selectedOptions).map(
+        (option) => option.value,
+      );
+    } else {
+      this.filterValue = event.target.value;
+    }
   }
 
   @action clearFilter() {
