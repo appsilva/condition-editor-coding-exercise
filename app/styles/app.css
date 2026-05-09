@@ -25,3 +25,15 @@
 .clear-button {
   padding: 0.25rem;
 }
+
+.filtered-products-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.header,
+.cell {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}

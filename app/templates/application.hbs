@@ -46,7 +46,10 @@
           >
             <option value="">Select a value</option>
             {{#each this.selectedProperty.values as |propertyValue|}}
-              <option value={{propertyValue}}>{{propertyValue}}</option>
+              <option
+                value={{propertyValue}}
+                selected={{includes this.filterValue propertyValue}}
+              >{{propertyValue}}</option>
             {{/each}}
           </select>
         {{else}}
@@ -66,5 +69,27 @@
       type="button"
       {{on "click" this.clearFilter}}
     >Clear filter</button>
+  </section>
+
+  <section class="products">
+    <p>{{this.filteredProducts.length}} result(s)</p>
+    <table class="filtered-products-table">
+      <thead>
+        <tr>
+          {{#each this.properties as |property|}}
+            <th class="header">{{property.name}}</th>
+          {{/each}}
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.filteredProducts as |product|}}
+          <tr>
+            {{#each this.properties as |property|}}
+              <td class="cell">{{this.valueForProduct product property.id}}</td>
+            {{/each}}
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
   </section>
 </main>
